@@ -18,6 +18,9 @@ function App() {
 
   return (
     <>
+      {
+        // Example using new PersonaLoader + PersonaClient in this file
+      }
       <PersonaLoader referenceId='userId' clientsToLoad={[PersonaPhotoClientConfiguration({
         onLoad: () => { setPersonaTime(Date.now()); },
         onReady: () => { console.log(`PersonaLoader: ${Date.now() - personaTime}`); }
@@ -27,6 +30,10 @@ function App() {
         }
         <button onClick={changePersona}>Open Persona</button>
       </PersonaLoader>
+
+      {
+        // Example showing the current "react component" that comes in persona for Persona.Inquiry
+      }
 
       <button onClick={changePersonaInquiry}>Change Persona Inquiry</button>
       {openPersonaInquiry && 
