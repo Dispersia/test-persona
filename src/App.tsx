@@ -1,5 +1,5 @@
 import Persona, { Client, ClientOptions } from "persona";
-import { createContext, ReactNode, Suspense, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, ReactNode, Suspense, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 function App() {
   const [openPersona, setOpenPersona] = useState(false);
@@ -77,26 +77,25 @@ const PersonaLoader = ({
   referenceId,
   children
 }: PersonaLoaderProps) => {
-  const [templates, setTemplates] = useState(new Map());
+  const templates = useRef(new Map());
   
   useEffect(() => {
-    setTemplates(new Map(clientsToLoad.map(options => {
+    templates.current = new Map(clientsToLoad.map(options => {
       const client = new Persona.Client({
         referenceId,
         ...options
       });
-
-      client.render();
-      
+    
+      client.render();      
       return [
         options.templateId!,
         client
       ]
-    })));
+      }))
   }, []);
   
   return (
-    <PersonaContext.Provider value={{templates}}>
+    <PersonaContext.Provider value={{templates: templates.current}}>
       {children}
     </PersonaContext.Provider>
   );
