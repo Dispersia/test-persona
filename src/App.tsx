@@ -16,15 +16,17 @@ function App() {
     setOpenPersonaInquiry(!openPersonaInquiry);
   };
 
+  const personaPhotoConfig = PersonaPhotoClientConfiguration({
+    onLoad: () => { setPersonaTime(Date.now()); },
+    onReady: () => { console.log(`PersonaLoader: ${Date.now() - personaTime}`); }
+  });
+
   return (
     <>
       {
         // Example using new PersonaLoader + PersonaClient in this file
       }
-      <PersonaLoader referenceId='userId' clientsToLoad={[PersonaPhotoClientConfiguration({
-        onLoad: () => { setPersonaTime(Date.now()); },
-        onReady: () => { console.log(`PersonaLoader: ${Date.now() - personaTime}`); }
-      })]}>
+      <PersonaLoader referenceId='userId' clientsToLoad={[personaPhotoConfig]}>
         {openPersona &&
           <PersonaClient templateId={PersonaPhotoClientOptions.templateId!} />
         }
